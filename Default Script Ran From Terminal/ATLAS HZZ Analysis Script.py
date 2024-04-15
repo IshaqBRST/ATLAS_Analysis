@@ -5,13 +5,6 @@
 
 
 import sys
-# update the pip package installer
-get_ipython().system('{sys.executable} -m pip install --upgrade --user pip')
-# install required packages
-get_ipython().system('{sys.executable} -m pip install --upgrade --user uproot awkward vector numpy matplotlib')
-
-
-# In[19]:
 
 
 import uproot # for reading .root files
@@ -22,6 +15,7 @@ import math # for mathematical functions such as square root
 import numpy as np # for numerical calculations such as histogramming
 import matplotlib.pyplot as plt # for plotting
 from matplotlib.ticker import AutoMinorLocator # for minor ticks
+
 
 import infofile # local file containing cross-sections, sums of weights, dataset IDs
 
@@ -216,7 +210,7 @@ print("Time taken: "+str(round(elapsed,1))+"s") # print total time taken to proc
 # In[30]:
 
 
-def plot_data(data):
+def plot_data(data, output_path='output_histogram.png'):
 
     xmin = 80 * GeV
     xmax = 250 * GeV
@@ -340,6 +334,8 @@ def plot_data(data):
     # draw the legend
     main_axes.legend( frameon=False ) # no box around the legend
     
+    plt.savefig(output_path, format='png', dpi=300)  # Saves the figure to the specified path with 300 DPI in PNG format
+    
     return
 
 
@@ -347,6 +343,8 @@ def plot_data(data):
 
 
 plot_data(data)
+# Save the figure
+
 
 
 # In[ ]:
