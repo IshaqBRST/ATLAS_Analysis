@@ -10,6 +10,13 @@ Communication via containers is achieved using RabbitMQ.
 
 ## Running Container Cluster
 
-To run the container clusters, simply navigate to the directory you've cloned this repository to and enter the following command in your console:
-'docker-compose build'
+To run the container clusters, simply navigate to the directory you've cloned this repository to in your console and enter the following command:
+`docker-compose build`
 
+## Using Docker Swarm to Scale
+
+To scale the analysis you can use docker swarm.
+
+(1) Initiliasing Docker Swarm
+
+`docker swarm init --advertise-addr <IP-ADDRESS>`
