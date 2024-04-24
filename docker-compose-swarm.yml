@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Typically only one replica of RabbitMQ is needed unless you configure clustering
+
+  signal_data_processor:
+    build:
+      context: ./signal_data_processor
+      dockerfile: dockerfile.signal_data_processor
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Adjust the number of replicas as needed
+
+  real_data_processor:
+    build:
+      context: ./real_data_processor
+      dockerfile: dockerfile.real_data_processor
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Adjust the number of replicas as needed
+
+  background_zz_processor:
+    build:
+      context: ./background_zz_processor
+      dockerfile: dockerfile.background_zz_processor
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Adjust the number of replicas as needed
+
+  background_ztbar_processor:
+    build:
+      context: ./background_ztbar_processor
+      dockerfile: dockerfile.background_ztbar_processor
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Adjust the number of replicas as needed
+
+  plotter:
+    build:
+      context: ./plotter
+      dockerfile: dockerfile.plotter
+    volumes:
+      - ./output:/app/output
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - app-network
+    deploy:
+      replicas: 1  # Typically only one instance is needed
+
+networks:
+  app-network:
+    driver: bridge
