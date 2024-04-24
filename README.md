@@ -30,7 +30,7 @@ Additional nodes may be added to the swarm as manager nodes through the followin
 
 `docker swarm join-token manager`
 
-### Additional Nodes
+### Additional Worker Nodes
 
 Additional nodes may be added to the swarm as worker nodes through the following command.
 
@@ -46,7 +46,7 @@ Use the following command to deploy the stack to Docker Swarm. Replace 'myapp' w
 
 `docker stack deploy -c docker-compose.yml myapp`
 
-### Adjusting Services Based on Load from Console
+### Adjusting Services Based on Work Load from Console
 
 You can use the following command to adjust the number of replica services using this command
 
