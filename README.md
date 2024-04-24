@@ -52,7 +52,7 @@ You can use the following command to adjust the number of replica services using
 
 `docker service scale myapp_web=4`
 
-For example, you can using `docker service scale myapp_signal_data_processor=5` will create 5 additional containers to process the signal_data , thereby facilitating up-scaling.
+For example, `docker service scale myapp_signal_data_processor=5` will create 5 additional containers to process the signal_data , thereby facilitating up-scaling.
 
 
 
