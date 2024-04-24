@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  processing:
+    build: 
+      context: ./processing
+      dockerfile: dockerfile.processing  
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq  
+      - RABBITMQ_PORT=5672
+
+  plotter:
+    build: 
+      context: ./plotter
+      dockerfile: dockerfile.plotter 
+    volumes:
+      - C:/Users/Mohammad/SCIFM0004RAHMAN/Docker Working Directory 2/output:/output
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+
+volumes:
+  rabbitmq_data:
+
+networks:
+  default:
